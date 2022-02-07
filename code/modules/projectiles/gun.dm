@@ -59,8 +59,6 @@
 	var/burst_delay = 2
 	// The delay added to the move before it can move after shooting, will usually stop the mob from moving entirely.
 	var/move_delay = 1
-	// The variable controlling the extra damage our gun does, is a multiplier.
-	var/damage_mult = 1
 	// The Sound shooting Plays.
 	var/fire_sound = 'sound/weapons/gunshot/gunshot.ogg'
 	var/fire_sound_text = "gunshot"
@@ -427,7 +425,6 @@
 //does the actual launching of the projectile
 /obj/item/weapon/gun/proc/process_projectile(obj/projectile, mob/user, atom/target, var/target_zone, var/params=null)
 	var/obj/item/projectile/P = projectile
-	P.damage *= damage_mult // multiply our projectiles damage.
 	if(!istype(P))
 		return 0 //default behaviour only applies to true projectiles
 
