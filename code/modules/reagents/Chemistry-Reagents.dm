@@ -50,6 +50,10 @@
 	var/scent_intensity = /decl/scent_intensity/normal
 	var/scent_descriptor = SCENT_DESC_SMELL
 	var/scent_range = 1
+	// Our list of reagents to purge, if any.
+	var/list/datum/reagent/purge_list
+	// Our rate of purge. Set a number.
+	var/purge_rate = 0
 
 /datum/reagent/New(var/datum/reagents/holder)
 	if(!istype(holder))
@@ -80,6 +84,8 @@
 		return // Something else removed us.
 	if(!istype(M))
 		return
+	if(purge_rate > 0) // do we have any purge rate at all?
+		purge(M) // Purge mob.
 	if(!(flags & AFFECTS_DEAD) && M.stat == DEAD && (world.time - M.timeofdeath > 150))
 		return
 	if(overdose && (location != CHEM_TOUCH))
@@ -165,3 +171,16 @@
 	touch_mob(target)
 
 /datum/reagent/proc/custom_temperature_effects(var/temperature)
+
+/datum/reagent/proc/purge(mob/living/M, var/mob/living/carbon/I) // Why yes, the second one is there to make the ingestion check not fail.
+	var/datum/reagents/ingested = I.get_ingested_reagents()// for Ingested reagents.
+
+	for(var/datum/reagent/R in ingested.reagent_list) // Stomach.
+		if((R.type in length(purge_list))) // Call the entire length of the list so we grab children.
+			ingested.remove_reagent(R.type, purge_rate)
+			to_chat(M, "hey this is getting called in da stomach", purge_rate)
+
+	for(var/datum/reagent/R in M.reagents.reagent_list) // Bloodstream.
+		if((R.type in length(purge_list)))
+			M.reagents.remove_reagent(R.type, purge_rate)
+			to_chat(M, "hey this is getting called,", purge_rate)

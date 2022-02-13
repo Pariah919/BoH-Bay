@@ -91,12 +91,8 @@
 	scannable = 1
 	flags = IGNORE_MOB_SIZE
 	value = 2.1
-	var/remove_generic = 1
-	var/list/remove_toxins = list(
-		/datum/reagent/toxin/zombiepowder,
-		/datum/reagent/soporific,
-		/datum/reagent/chloralhydrate
-	)
+	purge_list = (/datum/reagent/soporific, /datum/reagent/chloralhydrate)
+	purge_rate = 2
 
 /datum/reagent/dylovene/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	if(alien == IS_DIONA)
@@ -107,14 +103,13 @@
 		M.adjust_hallucination(-9 * removed)
 		M.add_up_to_chemical_effect(CE_ANTITOX, 1)
 
-	var/removing = (4 * removed)
-	var/datum/reagents/ingested = M.get_ingested_reagents()
+	var/datum/reagents/ingested = M.get_ingested_reagents() // I treid to make this less snowflakey for 1 hour, maybe you can.
 	for(var/datum/reagent/R in ingested.reagent_list)
-		if((remove_generic && istype(R, /datum/reagent/toxin)) || (R.type in remove_toxins))
-			ingested.remove_reagent(R.type, removing)
+		if((remove_generic && istype(R, /datum/reagent/toxin))
+			ingested.remove_reagent(R.type, purge_rate))
 			return
 	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if((remove_generic && istype(R, /datum/reagent/toxin)) || (R.type in remove_toxins))
+		if((remove_generic && istype(R, /datum/reagent/toxin))
 			M.reagents.remove_reagent(R.type, removing)
 			return
 
@@ -1279,3 +1274,34 @@
 	M.add_chemical_effect(CE_PAINKILLER, 80)
 	M.add_chemical_effect(CE_SPEEDBOOST, 5)
 	M.add_chemical_effect(CE_PULSE, 2)
+
+/datum/reagent/blue_haze
+	name = "Blue Haze"
+	description = "Blue Haze is a highly illegal chemical derivied from Oxycodone and Synaptizine laced with mainly Carpotoxin, creating a incredibly strong but dangerous nerve suppressant. Causes jittering and liver failure as a side effect."
+	taste_description = "acid"
+	reagent_state = LIQUID
+	color = "#FFFFFF"
+	metabolism = REM * 0.1
+	overdose = 15
+	value = 15
+	purge_list = list(/datum/reagent/tramadol, /datum/reagent/peridaxon)
+	purge_rate = 2
+
+/datum/reagent/blue_haze/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
+	if(alien == IS_DIONA)
+		return
+	M.add_chemical_effect(CE_PULSE, -2) // Lowers heart rate.
+	M.druggy = max(M.druggy, 10)
+	M.make_jittery(1)
+	M.AdjustParalysis(-2) // Removes most things that stun you incredibly quickly.
+	M.AdjustStunned(-2)
+	M.AdjustWeakened(-2)
+	M.adjustHalLoss(-50)
+	M.add_chemical_effect(CE_PAINKILLER, 500)
+	var/obj/item/organ/internal/liver = M.internal_organs_by_name[BP_LIVER]
+	liver.take_internal_damage(0.5)
+
+/datum/reagent/blue_haze/overdose(var/mob/living/carbon/M, var/alien, var/removed) // Overdoses kill you by slowing your heart rate massively.
+	..()
+	M.add_chemical_effect(CE_TOXIN, 3)
+	M.add_chemical_effect(CE_PULSE, -10)
