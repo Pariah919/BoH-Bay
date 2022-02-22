@@ -19,6 +19,7 @@
 	var/recentpump = 0 // to prevent spammage
 	wielded_item_state = "shotgun-wielded"
 	load_sound = 'sound/weapons/guns/interaction/shotgun_instert.ogg'
+	var/pumpsound = 'sound/weapons/shotgunpump.ogg'
 
 /obj/item/weapon/gun/projectile/shotgun/on_update_icon()
 	..()
@@ -44,7 +45,7 @@
 		pump()
 
 /obj/item/weapon/gun/projectile/shotgun/pump/proc/pump(mob/M as mob)
-	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	playsound(M, pumpsound, 60, 1)
 
 	if(chambered)//We have a shell in the chamber
 		chambered.dropInto(loc)//Eject casing

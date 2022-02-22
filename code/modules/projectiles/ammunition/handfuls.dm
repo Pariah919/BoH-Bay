@@ -180,3 +180,19 @@
 
 /obj/item/ammo_magazine/handful/magnum_handful/small/two
 	initial_ammo = 2
+
+// RIFLE
+
+/obj/item/ammo_magazine/handful/rifle_handful
+	name = "\improper handful of rifle rounds"
+	desc = "A handful of rounds for a rifle. 7mmR."
+	max_ammo = 6
+	icon_state = "handful_rifle"
+	caliber = CALIBER_RIFLE
+	ammo_type = /obj/item/ammo_casing/rifle
+
+/obj/item/ammo_magazine/handful/rifle_handful/russian
+	name = "\improper handful of rifle rounds"
+	desc = "A handful of rounds for a rifle. 7.62x54R."
+	max_ammo = 5
+	caliber = CALIBER_RIFLE_RUSSIAN

@@ -314,3 +314,45 @@
 	desc = "A disposable use rocket launcher, better known as an RPG well known around SolGov space, used by many people and many folk to blow things sky high. It cannot be unloaded or reloaded without specialized tools and is meant to be disposed once used. This is one is a licensed version, known as the Lance 19 for the SMC."
 	icon_state = "disposable_marine"
 	item_state = "disposable_marine"
+
+// Generic Bolt action, basically a shotgun that fires rifle bullets. Opening and closing bolts is annoying and pointless realism.
+
+/obj/item/weapon/gun/projectile/shotgun/pump/boltaction
+	name = "'M1916' Mosin Nagant"
+	desc = "This a ancient design of rifle firing full power rounds and probably being older than your grandparents grandparents. Seen just about everywhere. Has a 'RIFLE, MODEL OF 1916, 7.62MM' on the stock."
+	icon = 'icons/obj/guns/boltaction.dmi'
+	icon_state = "mosin"
+	item_state = "mosin"
+	max_shells = 5
+	caliber = CALIBER_RIFLE_RUSSIAN
+	load_method = SINGLE_CASING|SINGLE_LOAD
+	ammo_type = /obj/item/ammo_casing/rifle/russian
+	one_hand_penalty = 15
+	bulk = 4
+	wielded_item_state = "mosin-wielded"
+	load_sound = 'sound/weapons/guns/interaction/boltaction_insert.ogg'
+	pumpsound = 'sound/weapons/boltworking.ogg'
+
+/obj/item/weapon/gun/projectile/shotgun/pump/boltaction/handle_post_fire(mob/user, atom/target, var/pointblank=0, var/reflex=0)
+	..()
+	if(user && user.skill_check(SKILL_WEAPONS, SKILL_PROF))
+		to_chat(user, "<span class='notice'>You bolt the rifle with a reflexive motion, ejecting [chambered]!</span>")
+		pump()
+
+/obj/item/ammo_casing/rifle/russian
+	desc = "A high-power pistol rubber bullet casing."
+	caliber = CALIBER_RIFLE_RUSSIAN
+
+// THE OBREZ //
+
+/obj/item/weapon/gun/projectile/shotgun/pump/boltaction/obrez
+	name = "RA-Mosin 'Obrez'" // yes some random guy bubba'ed a american mosin, yes I find it funny -MJP
+	desc = "This a full power rifle made into the length of half an arm, firing full power. Probably older than your grandparents grandparents. Will leave a hole in both YOUR arm and their general area. Has a faded 'REM*NG*N A*MS' on the bottom. Whatever that means."
+	icon_state = "obrez"
+	item_state = "obrez"
+	max_shells = 5
+	w_class = ITEM_SIZE_LARGE
+	force = 15
+	one_hand_penalty = 8
+	bulk = 6
+	wielded_item_state = "shotgun-wielded"
