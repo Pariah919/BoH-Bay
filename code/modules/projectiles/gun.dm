@@ -90,8 +90,10 @@
 	var/combustion
 	//damage multiplier. Multiplies damage. 0 does nothing, by the way. Higher means more damage, lower less.
 	var/damage_mult = 1
-	// Pen multiplier. Multiplies pen. 0 means no pen, higher means more pen, lower less.
-	var/penetration_mult = 1
+	// Pen multiplier. adds/subtracts pen. 0 means no pen, higher means more pen, lower less.
+	var/penetration_mod = 0
+	// Falloff modifier. less means less distance falloff, more means more.
+	var/falloff_mod = 0
 	// Does this firemode at full auto? Effectively an autoclicker. Set to true if yes. The gun will keep firing until empty when the mouse is held down.
 	var/automatic = FALSE
 	// Our base Acc_Mod. Higher levels means the gun has a higher accuracy modifier in the acc_mod calcs.
@@ -101,6 +103,9 @@
 	var/sel_mode = 1 //index of the currently selected mode
 	var/list/firemodes = list() // Your lists of firemodes.
 	var/selector_sound = 'sound/weapons/guns/selector.ogg'
+
+	var/slowdown_held = 0 //How much slowdown when held
+	var/slowdown_worn = 0 //How much slowdown when worn
 
 	//aiming system stuff
 	var/keep_aim = 1 	//1 for keep shooting until aim is lowered
@@ -133,6 +138,11 @@
 		pin = new firing_pin_type(src)
 		pin.installed_in = src
 
+	slowdown_per_slot[slot_l_hand] =  slowdown_held
+	slowdown_per_slot[slot_r_hand] =  slowdown_held
+	slowdown_per_slot[slot_back] =    slowdown_worn
+	slowdown_per_slot[slot_belt] =    slowdown_worn
+	slowdown_per_slot[slot_s_store] = slowdown_worn
 
 /obj/item/weapon/gun/update_twohanding()
 	if(one_hand_penalty)
@@ -436,8 +446,8 @@
 /obj/item/weapon/gun/proc/process_projectile(obj/projectile, mob/user, atom/target, var/target_zone, var/params=null)
 	var/obj/item/projectile/P = projectile
 	P.damage *= damage_mult // Multiplies our projectiles damage.
-	P.armor_penetration *= penetration_mult // Multiplies the penetration of our projectile.
-
+	P.armor_penetration += penetration_mod // adds/subtracts from penetration of our projectile.
+	P.distance_falloff += falloff_mod // Adds/subtracts distance falloff of our projectile.
 	if(!istype(P))
 		return 0 //default behaviour only applies to true projectiles
 

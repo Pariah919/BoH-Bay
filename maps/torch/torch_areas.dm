@@ -152,8 +152,8 @@
 	name = "\improper Laundry Room"
 	icon_state = "Sleep"
 
-/area/crew_quarters/garden
-	name = "\improper Ship Garden"
+/area/crew_quarters/recreation
+	name = "\improper Recreation"
 
 //Second Deck (Z-3)
 /area/maintenance/seconddeck
@@ -631,6 +631,11 @@
 	icon_state = "disperser"
 	req_access = list(access_bridge)
 
+/area/command/disperser/odst
+	name = "\improper Drop-Pod Bays"
+	icon_state = "disperser"
+	req_access = list(access_infantry)
+
 /area/crew_quarters/heads
 	icon_state = "heads"
 	req_access = list(access_heads)
@@ -677,14 +682,15 @@
 	name = "\improper Command - CL's Office"
 	req_access = list(access_liaison)
 
-/area/crew_quarters/heads/office/cl/backroom
-	icon_state = "heads_cl"
-	name = "\improper Command - CL's Backroom"
-	req_access = list(access_liaison)
+/area/crew_quarters/heads/office/solrep
+	icon_state = "heads_sol"
+	name = "\improper Command - Rep's Office"
+	req_access = list(access_representative)
 
-/area/crew_quarters/heads/office/vip
-	icon_state = "heads_sr"
-	name = "\improper Command - VIP Quarters"
+/area/crew_quarters/heads/office/solrep/backroom
+	icon_state = "heads_sol"
+	name = "\improper Command - Rep's Backroom"
+	req_access = list(access_representative)
 
 /area/crew_quarters/heads/office/sea
 	icon_state = "heads_sea"
@@ -1758,10 +1764,6 @@
 	name = "\improper Cabin Two"
 	icon_state = "Sleep"
 
-/area/crew_quarters_boh/cabin_main/c3
-	name = "\improper Cabin Three"
-	icon_state = "Sleep"
-
 /area/crew_quarters_boh/cabin_main/janitorial
 	name = "\improper Cabin Janitorial"
 	icon_state = "janitor"
@@ -1823,12 +1825,6 @@
 	name = "\improper Infantry Barracks Exterior"
 	icon_state = "Sleep"
 	req_access = list(access_infantry)
-
-/area/security/infantry/aux_bunk
-	name = "\improper Auxiliary Infantry Barracks"
-	icon_state = "Sleep"
-	req_access = list(access_infantry)
-
 
 /////////
 // Anom

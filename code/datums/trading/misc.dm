@@ -45,7 +45,8 @@
 								/mob/living/simple_animal/hostile/retaliate/parrot      = TRADER_THIS_TYPE,
 								/mob/living/simple_animal/hostile/retaliate/beast/samak= TRADER_THIS_TYPE,
 								/mob/living/simple_animal/hostile/retaliate/goat = TRADER_THIS_TYPE,
-								/mob/living/simple_animal/hostile/carp = TRADER_ALL,
+								/mob/living/simple_animal/hostile/carp = TRADER_THIS_TYPE,
+								/mob/living/simple_animal/hostile/carp/pike = TRADER_THIS_TYPE,
 								)
 
 	possible_trading_items = list(/mob/living/simple_animal/corgi     = TRADER_THIS_TYPE,
@@ -69,11 +70,12 @@
 								/mob/living/simple_animal/hostile/retaliate/parrot      = TRADER_THIS_TYPE,
 								/mob/living/simple_animal/hostile/retaliate/beast/samak= TRADER_THIS_TYPE,
 								/mob/living/simple_animal/hostile/retaliate/goat = TRADER_THIS_TYPE,
-								/mob/living/simple_animal/hostile/carp= TRADER_ALL,
+								/mob/living/simple_animal/hostile/carp= TRADER_THIS_TYPE,
+								/mob/living/simple_animal/hostile/carp/pike = TRADER_THIS_TYPE,
 								/obj/item/device/dociler              = TRADER_THIS_TYPE,
 								/obj/structure/dogbed                 = TRADER_THIS_TYPE)
 
-/datum/trader/ship/prank_shop
+/datum/trader/prank_shop
 	name = "Prank Shop Owner"
 	name_language = LANGUAGE_ROOTLOCAL
 	origin = "Prank Shop"
@@ -112,6 +114,14 @@
 								/obj/item/weapon/gun/launcher/pneumatic/small = TRADER_THIS_TYPE,
 								/obj/item/weapon/gun/projectile/revolver/capgun = TRADER_THIS_TYPE,
 								/obj/item/clothing/mask/fakemoustache   = TRADER_THIS_TYPE,
+								/obj/item/clothing/mask/gas/monkeymask  = TRADER_THIS_TYPE,
+								/obj/item/clothing/suit/monkeysuit      = TRADER_THIS_TYPE,
+								/obj/item/clothing/head/cardborg        = TRADER_THIS_TYPE,
+								/obj/item/clothing/head/chicken         = TRADER_THIS_TYPE,
+								/obj/item/clothing/suit/chickensuit     = TRADER_THIS_TYPE,
+								/obj/item/clothing/mask/horsehead       = TRADER_THIS_TYPE,
+								/obj/item/weapon/bikehorn/rubberducky   = TRADER_THIS_TYPE,
+								/obj/item/weapon/inflatable_duck        = TRADER_THIS_TYPE,
 								/obj/item/weapon/grenade/spawnergrenade/fake_carp = TRADER_THIS_TYPE)
 
 /datum/trader/ship/replica_shop
@@ -160,4 +170,6 @@
 								/obj/item/weapon/material/sword        = TRADER_ALL,
 								/obj/item/weapon/material/scythe       = TRADER_THIS_TYPE,
 								/obj/item/weapon/material/star         = TRADER_THIS_TYPE,
+								/obj/item/weapon/cane/concealed        = TRADER_THIS_TYPE,
+								/obj/item/weapon/melee/whip            = TRADER_THIS_TYPE,
 								/obj/item/weapon/material/twohanded/baseballbat = TRADER_THIS_TYPE)
