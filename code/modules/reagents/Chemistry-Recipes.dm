@@ -223,6 +223,12 @@
 	required_reagents = list(/datum/reagent/acid/hydrochloric = 1, /datum/reagent/ammonia = 1, /datum/reagent/dylovene = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/narcell
+	name = "Narcell"
+	result = /datum/reagent/narcell
+	required_reagents = list(/datum/reagent/spaceacillin = 1, /datum/reagent/acetone = 1)
+	result_amount = 2
+
 /datum/chemical_reaction/dexalin
 	name = "Dexalin"
 	result = /datum/reagent/dexalin
