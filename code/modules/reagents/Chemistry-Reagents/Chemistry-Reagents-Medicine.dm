@@ -92,7 +92,7 @@
 	flags = IGNORE_MOB_SIZE
 	value = 2.1
 	purge_list = list(/datum/reagent/toxin, /datum/reagent/soporific, /datum/reagent/chloralhydrate)
-	purge_rate = 2
+	purge_rate = 1
 
 /datum/reagent/dylovene/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	if(alien == IS_DIONA)

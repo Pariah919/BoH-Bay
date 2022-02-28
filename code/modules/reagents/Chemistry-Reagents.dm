@@ -172,15 +172,7 @@
 
 /datum/reagent/proc/custom_temperature_effects(var/temperature)
 
-/datum/reagent/proc/purge(mob/living/M, var/mob/living/carbon/I) // Why yes, the second one is there to make the ingestion check not fail.
-	var/datum/reagents/ingested = I.get_ingested_reagents()// for Ingested reagents.
-
-	for(var/datum/reagent/R in ingested.reagent_list) // Stomach.
-		if((R.type in length(purge_list))) // Call the entire length of the list so we grab children.
-			ingested.remove_reagent(R.type, purge_rate)
-			to_chat(M, "hey this is getting called in da stomach", purge_rate)
-
-	for(var/datum/reagent/R in M.reagents.reagent_list) // Bloodstream.
-		if((R.type in length(purge_list)))
+/datum/reagent/proc/purge(mob/living/M)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if((R.type in purge_list))
 			M.reagents.remove_reagent(R.type, purge_rate)
-			to_chat(M, "hey this is getting called,", purge_rate)
