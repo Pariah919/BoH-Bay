@@ -91,27 +91,16 @@
 	scannable = 1
 	flags = IGNORE_MOB_SIZE
 	value = 2.1
-	purge_list = (/datum/reagent/soporific, /datum/reagent/chloralhydrate)
+	purge_list = list(/datum/reagent/toxin, /datum/reagent/soporific, /datum/reagent/chloralhydrate)
 	purge_rate = 2
 
 /datum/reagent/dylovene/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	if(alien == IS_DIONA)
 		return
 
-	if(remove_generic)
-		M.drowsyness = max(0, M.drowsyness - 6 * removed)
-		M.adjust_hallucination(-9 * removed)
-		M.add_up_to_chemical_effect(CE_ANTITOX, 1)
-
-	var/datum/reagents/ingested = M.get_ingested_reagents() // I treid to make this less snowflakey for 1 hour, as for some reason my purge code doesn't purge generic children. Maybe you can.
-	for(var/datum/reagent/R in ingested.reagent_list)
-		if((remove_generic && istype(R, /datum/reagent/toxin))
-			ingested.remove_reagent(R.type, purge_rate))
-			return
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if((remove_generic && istype(R, /datum/reagent/toxin))
-			M.reagents.remove_reagent(R.type, removing)
-			return
+	M.drowsyness = max(0, M.drowsyness - 6 * removed)
+	M.adjust_hallucination(-9 * removed)
+	M.add_up_to_chemical_effect(CE_ANTITOX, 1)
 
 /datum/reagent/dexalin
 	name = "Dexalin"
@@ -397,11 +386,7 @@
 	color = "#dadd98"
 	scannable = 1
 	metabolism = REM * 2
-	remove_generic = 0
-	remove_toxins = list(
-		/datum/reagent/toxin/venom,
-		/datum/reagent/toxin/carpotoxin
-	)
+	purge_rate = 5
 
 /datum/reagent/alkysine
 	name = "Alkysine"
