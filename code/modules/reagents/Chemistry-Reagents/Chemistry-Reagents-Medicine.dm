@@ -103,7 +103,7 @@
 		M.adjust_hallucination(-9 * removed)
 		M.add_up_to_chemical_effect(CE_ANTITOX, 1)
 
-	var/datum/reagents/ingested = M.get_ingested_reagents() // I treid to make this less snowflakey for 1 hour, maybe you can.
+	var/datum/reagents/ingested = M.get_ingested_reagents() // I treid to make this less snowflakey for 1 hour, as for some reason my purge code doesn't purge generic children. Maybe you can.
 	for(var/datum/reagent/R in ingested.reagent_list)
 		if((remove_generic && istype(R, /datum/reagent/toxin))
 			ingested.remove_reagent(R.type, purge_rate))
@@ -1293,13 +1293,13 @@
 	M.add_chemical_effect(CE_PULSE, -2) // Lowers heart rate.
 	M.druggy = max(M.druggy, 10)
 	M.make_jittery(1)
-	M.AdjustParalysis(-2) // Removes most things that stun you incredibly quickly.
-	M.AdjustStunned(-2)
-	M.AdjustWeakened(-2)
+	M.AdjustParalysis(-1) // Removes most things that stun you incredibly quickly.
+	M.AdjustStunned(-1)
+	M.AdjustWeakened(-1)
 	M.adjustHalLoss(-50)
-	M.add_chemical_effect(CE_PAINKILLER, 500)
+	M.add_chemical_effect(CE_PAINKILLER, 100)
 	var/obj/item/organ/internal/liver = M.internal_organs_by_name[BP_LIVER]
-	liver.take_internal_damage(0.5)
+	liver.take_internal_damage(0.75)
 
 /datum/reagent/blue_haze/overdose(var/mob/living/carbon/M, var/alien, var/removed) // Overdoses kill you by slowing your heart rate massively.
 	..()
