@@ -995,6 +995,28 @@
 		if(M.chem_doses[type] > M.species.blood_volume/8) //half of blood was replaced with us, rip white bodies
 			M.immunity = max(M.immunity - 0.5, 0)
 
+/datum/reagent/narcell
+	name = "Narcell"
+	description = "Narcell is a common chemical used to purge most common hard drugs and opiods."
+	taste_description = "wokeness"
+	reagent_state = LIQUID
+	color = "#9595B8"
+	metabolism = REM * 3
+	overdose = 15
+	value = 15
+	purge_list = list(/datum/reagent/tramadol, /datum/reagent/blue_haze, /datum/reagent/creth)
+	purge_rate = 10
+
+// I don't know what other effects the drug this is based off does so it just purges people.
+
+/datum/reagent/narcell/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
+	if(alien == IS_DIONA)
+		return
+
+/datum/reagent/narcell/overdose(var/mob/living/carbon/M, var/alien, var/removed)
+	M.add_chemical_effect(CE_TOXIN, 2)
+
+
 // Sleeping agent, produced by breathing N2O.
 /datum/reagent/nitrous_oxide
 	name = "Nitrous Oxide"
@@ -1280,7 +1302,7 @@
 	description = "Blue Haze is a highly illegal chemical derivied from Oxycodone and Synaptizine laced with mainly Carpotoxin, creating a incredibly strong but dangerous nerve suppressant. Causes jittering and liver failure as a side effect."
 	taste_description = "acid"
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = "#333399"
 	metabolism = REM * 0.1
 	overdose = 15
 	value = 15
