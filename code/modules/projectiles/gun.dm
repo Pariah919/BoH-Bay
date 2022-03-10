@@ -126,7 +126,6 @@
 	var/tmp/last_safety_check = -INFINITY
 	var/safety_state = 1
 	var/has_safety = TRUE // Does the gun have a safety?
-	var/safety_icon 	   //overlay to apply to gun based on safety state, if any
 	var/has_firing_pin = FALSE
 	var/obj/item/firing_pin/pin //firing pin
 	var/firing_pin_type //what type is our firing pin, if has_firing_pin is true.
@@ -156,6 +155,8 @@
 	slowdown_per_slot[slot_back] =    slowdown_worn
 	slowdown_per_slot[slot_belt] =    slowdown_worn
 	slowdown_per_slot[slot_s_store] = slowdown_worn
+	overlays -= image('icons/obj/guns/gui.dmi',"safety[safety()]")
+
 
 /obj/item/weapon/gun/update_twohanding()
 	if(one_hand_penalty)
@@ -175,8 +176,7 @@
 				item_state_slots[slot_r_hand_str] = initial(item_state)
 		if(M.skill_check(SKILL_WEAPONS,SKILL_BASIC))
 			overlays += image('icons/obj/guns/gui.dmi',"safety[safety()]")
-	if(safety_icon)
-		overlays += image(icon,"[safety_icon][safety()]")
+			to_chat("WHAT")
 
 //Checks whether a given mob can use the gun
 //Any checks that shouldn't result in handle_click_empty() being called if they fail should go here.
@@ -708,7 +708,6 @@
 // Field Stripping //
 
 /obj/item/weapon/gun/verb/field_Strip()
-	set src in usr
 	set category = "Object"
 	set name = "Field-Strip"
 	if(usr == loc)
