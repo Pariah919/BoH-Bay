@@ -155,7 +155,6 @@
 	slowdown_per_slot[slot_back] =    slowdown_worn
 	slowdown_per_slot[slot_belt] =    slowdown_worn
 	slowdown_per_slot[slot_s_store] = slowdown_worn
-	overlays -= image('icons/obj/guns/gui.dmi',"safety[safety()]")
 
 
 /obj/item/weapon/gun/update_twohanding()
@@ -165,7 +164,6 @@
 
 /obj/item/weapon/gun/on_update_icon()
 	var/mob/living/M = loc
-	overlays -= image('icons/obj/guns/gui.dmi',"safety[safety()]") // Used to cut all other overlays, just cuts Safety_Icons now.
 	if(istype(M))
 		if(wielded_item_state)
 			if(M.can_wield_item(src) && src.is_held_twohanded(M))
@@ -174,9 +172,6 @@
 			else
 				item_state_slots[slot_l_hand_str] = initial(item_state)
 				item_state_slots[slot_r_hand_str] = initial(item_state)
-		if(M.skill_check(SKILL_WEAPONS,SKILL_BASIC))
-			overlays += image('icons/obj/guns/gui.dmi',"safety[safety()]")
-			to_chat("WHAT")
 
 //Checks whether a given mob can use the gun
 //Any checks that shouldn't result in handle_click_empty() being called if they fail should go here.
