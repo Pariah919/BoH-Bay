@@ -60,6 +60,7 @@ What is the naming convention for planes or layers?
 	FLOAT_PLANE = -32767
 */
 
+#define HIDDEN_SHIT_PLANE  -499 //Used for the hiding of the vision cone masking object.
 #define CLICKCATCHER_PLANE -100
 
 #define SPACE_PLANE               -99
@@ -186,6 +187,8 @@ What is the naming convention for planes or layers?
 	#define HUD_BASE_LAYER               2
 	#define HUD_ITEM_LAYER               3
 	#define HUD_ABOVE_ITEM_LAYER         4
+	#define FOOTSTEP_ALERT_PLANE         6
+	#define VISION_CONE_PLANE            5
 
 
 //This is difference between planes used for atoms and effects
@@ -232,3 +235,25 @@ GLOBAL_LIST_INIT(ghost_master, list(
 	new /obj/screen/plane_master/ghost_master(),
 	new /obj/screen/plane_master/ghost_dummy()
 ))
+
+/obj/screen/plane_master/vision_cone_target
+	name = "vision cone master"
+	plane = HIDDEN_SHIT_PLANE
+	render_target = "vision_cone_target"
+
+/obj/screen/plane_master/vision_cone_blender
+	render_target = "vision_cone_target"
+
+//A series of vision related masters. They all have the same RT name to lower load on client.
+/obj/screen/plane_master/vision_cone/
+
+/obj/screen/plane_master/vision_cone/primary/Initialize() //For when you want things to not appear under the blind section.
+	. = ..()
+	filters += filter(type="alpha", render_source="vision_cone_target", flags=MASK_INVERSE)
+
+/obj/screen/plane_master/vision_cone/inverted //for things you want specifically to show up on the blind section.
+
+
+/obj/screen/plane_master/vision_cone/inverted/Initialize()
+	. = ..()
+	filters += filter(type="alpha", render_source="vision_cone_target")

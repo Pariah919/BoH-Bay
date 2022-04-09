@@ -173,16 +173,6 @@
 /mob/living/carbon/human/can_sprint()
 	return (stamina > 0)
 
-// Vision cone stuff.
-	var/list/clients_to_show = list()
-	for(var/mob/living/carbon/human/H in oview())
-		clients_to_show += H.get_client()
-	if(!length(clients_to_show))
-		return
-	var/image/I = image('icons/effects/footstepsound.dmi', loc = T, icon_state = "default")
-	I.plane = FOOTSTEP_ALERT_PLANE
-	flick_overlay(I, clients_to_show, 4)
-
 /mob/living/set_dir()
 	..()
 	update_vision_cone()

@@ -423,10 +423,10 @@
 	var/obj/screen/plane_master/vision_cone/inverted/footsteps = new//This master specifically makes it so the footstep stuff ONLY appears where it can't be seen.
 
 	//define what planes the masters dictate.
-	mob.plane = MOB_PLANE
-	lyingmob.plane = LYING_MOB_PLANE
-	human.plane = HUMAN_PLANE
-	lyinghuman.plane =LYING_HUMAN_PLANE
+	mob.plane = MECH_UNDER_LAYER
+	lyingmob.plane = LYING_MOB_LAYER
+	human.plane = BASE_HUMAN_LAYER
+	lyinghuman.plane = LYING_HUMAN_LAYER
 	footsteps.plane = FOOTSTEP_ALERT_PLANE
 
 	client.screen += VC // Is this necessary? Yes.

@@ -72,3 +72,13 @@
 				volume -= 60
 				range -= 0.333
 			playsound(T, footsound, volume, 1, range)
+// Vision cone stuff.
+	var/list/clients_to_show = list()
+	for(var/mob/living/carbon/human/H in oview())
+		clients_to_show += H.get_client()
+	if(!length(clients_to_show))
+		return
+	var/image/I = image('icons/effects/footstepsound.dmi', loc = T, icon_state = "default")
+	I.plane = FOOTSTEP_ALERT_PLANE
+	flick_overlay(I, clients_to_show, 4)
+	return

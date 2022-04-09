@@ -34,7 +34,7 @@
 	if(!src.client)
 		return
 
-	if(resting || lying || zoom || (client && client.eye != client.mob))
+	if(resting || lying || (client && client.eye != client.mob))
 		src.fov.alpha = 0
 		src.fov_mask.alpha = 0
 		return

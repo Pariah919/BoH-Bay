@@ -686,7 +686,6 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 		user.toggle_zoom_hud()	// If the user has already limited their HUD this avoids them having a HUD when they zoom in
 	user.client.view = viewsize
 	zoom = 1
-	user.zoom = 1
 	user.update_vision_cone()
 
 	var/viewoffset = WORLD_ICON_SIZE * tileoffset
@@ -719,7 +718,6 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(!zoom)
 		return
 	zoom = 0
-	user.zoom = 0
 	user.update_vision_cone()
 
 	GLOB.destroyed_event.unregister(src, src, /obj/item/proc/unzoom)
