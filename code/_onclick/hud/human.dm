@@ -187,7 +187,7 @@
 		mymob.healths.SetName("health")
 		mymob.healths.screen_loc = ui_health
 		hud_elements |= mymob.healths
-		
+
 		mymob.oxygen = new /obj/screen/oxygen()
 		mymob.oxygen.icon = 'icons/mob/status_indicators.dmi'
 		mymob.oxygen.icon_state = "oxy0"
@@ -249,6 +249,26 @@
 		mymob.hydration_icon.screen_loc = ui_nutrition_small
 		hud_elements |= mymob.hydration_icon
 
+	if(ishuman(mymob))
+		var/mob/living/carbon/human/H = mymob
+		H.fov = new /obj/screen()
+		H.fov.icon = 'icons/mob/hide.dmi'
+		H.fov.icon_state = "combat"
+		H.fov.name = " "
+		H.fov.screen_loc = "1,1"
+		H.fov.mouse_opacity = 0
+		H.fov.plane = VISION_CONE_PLANE
+		hud_elements |= H.fov
+
+		H.fov_mask = new /obj/screen()
+		H.fov_mask.icon = 'icons/mob/hide.dmi'
+		H.fov_mask.icon_state = "combat_mask"
+		H.fov_mask.name = " "
+		H.fov_mask.screen_loc = "1,1"
+		H.fov_mask.mouse_opacity = 0
+		H.fov_mask.plane = HIDDEN_SHIT_PLANE
+		hud_elements |= H.fov_mask
+
 	if(hud_data.has_up_hint)
 		mymob.up_hint = new /obj/screen()
 		mymob.up_hint.icon = ui_style
@@ -308,7 +328,7 @@
 		client.screen -= hud_used.hotkeybuttons
 		hud_used.hotkey_ui_hidden = 1
 
-// Yes, these use icon state. Yes, these are terrible. The alternative is duplicating 
+// Yes, these use icon state. Yes, these are terrible. The alternative is duplicating
 // a bunch of fairly blobby logic for every click override on these objects.
 
 /obj/screen/food/Click(var/location, var/control, var/params)
@@ -392,3 +412,26 @@
 /obj/screen/movement/Click(var/location, var/control, var/params)
 	if(istype(usr))
 		usr.set_next_usable_move_intent()
+
+/mob/living/carbon/human/add_filter_effects()
+	..()
+	var/obj/screen/plane_master/vision_cone_target/VC = new //ALWAYS DEFINE THIS, WEIRD SHIT HAPPENS OTHERWISE
+	var/obj/screen/plane_master/vision_cone/primary/mob = new//creating new masters to remove things from vision.
+	var/obj/screen/plane_master/vision_cone/primary/lyingmob = new//ditto
+	var/obj/screen/plane_master/vision_cone/primary/human = new//ditto
+	var/obj/screen/plane_master/vision_cone/primary/lyinghuman = new//ditto
+	var/obj/screen/plane_master/vision_cone/inverted/footsteps = new//This master specifically makes it so the footstep stuff ONLY appears where it can't be seen.
+
+	//define what planes the masters dictate.
+	mob.plane = MOB_PLANE
+	lyingmob.plane = LYING_MOB_PLANE
+	human.plane = HUMAN_PLANE
+	lyinghuman.plane =LYING_HUMAN_PLANE
+	footsteps.plane = FOOTSTEP_ALERT_PLANE
+
+	client.screen += VC // Is this necessary? Yes.
+	client.screen += mob
+	client.screen += lyingmob
+	client.screen += human
+	client.screen += lyinghuman
+	client.screen += footsteps

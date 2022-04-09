@@ -16,6 +16,11 @@
 	else
 		hud_used = new /datum/hud
 
+	add_filter_effects()
+
+/mob/proc/add_filter_effects()
+	return
+
 /datum/hud
 	var/mob/mymob
 

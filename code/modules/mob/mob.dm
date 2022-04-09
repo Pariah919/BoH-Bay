@@ -709,6 +709,8 @@
 		regenerate_icons()
 	else if( lying != lying_prev )
 		update_icons()
+	update_vision_cone()
+	return canmove
 
 /mob/proc/reset_layer()
 	if(lying)
@@ -949,21 +951,21 @@
 /mob/on_update_icon()
 	return update_icons()
 
-/mob/verb/face_direction()
 
-	set name = "Face Direction"
-	set category = "IC"
-	set src = usr
+/mob/verb/set_fixeye()//For macros.
+	set name = "set-fixeye"
+	set hidden = TRUE
+	face_direction()
 
+
+/mob/proc/face_direction()
 	set_face_dir()
 
-	if(!facing_dir)
-		to_chat(usr, "You are now not facing anything.")
-	else
-		to_chat(usr, "You are now facing [dir2text(facing_dir)].")
 
 /mob/proc/set_face_dir(var/newdir)
-	if(!isnull(facing_dir) && newdir == facing_dir)
+	if(newdir == FALSE)
+		facing_dir = null
+	else if(!isnull(facing_dir) && newdir == facing_dir)
 		facing_dir = null
 	else if(newdir)
 		set_dir(newdir)
@@ -973,17 +975,20 @@
 	else
 		set_dir(dir)
 		facing_dir = dir
+	/* Fix eye icon if you ever wanna add it - MJP
+	if(!fixeye)
+		return
+	//Ok we have the fixeye icon...
+	if(facing_dir)
+		fixeye.icon_state = "fixeye_on"
+	else
+		fixeye.icon_state = "fixeye"
+	*/
 
 /mob/set_dir()
 	if(facing_dir)
-		if(!canface() || lying || restrained())
+		if(!canface() || lying || buckled || restrained())
 			facing_dir = null
-		else if(buckled)
-			if(buckled.obj_flags & OBJ_FLAG_ROTATABLE)
-				buckled.set_dir(facing_dir)
-				return ..(facing_dir)
-			else
-				facing_dir = null
 		else if(dir != facing_dir)
 			return ..(facing_dir)
 	else
